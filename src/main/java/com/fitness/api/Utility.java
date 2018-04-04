@@ -9,4 +9,9 @@ public class Utility {
             gson = new Gson();
         return gson.toJson(object);
     }
+    public static <T> T parseJson(String string, Class<T> type){
+        if(gson == null)
+            gson = new Gson();
+        return gson.fromJson(string, type);
+    }
 }
