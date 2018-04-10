@@ -2,13 +2,12 @@ package com.fitness.api;
 
 import Email.EmailClient;
 import com.google.gson.JsonObject;
-import database.Database;
+import database.AccountApi;
 import com.google.gson.JsonParser;
 import org.apache.commons.codec.binary.Base64;
-
-
+import database.Account;
 import java.util.Date;
-import java.util.Map;
+
 
 import static spark.Spark.*;
 
@@ -19,7 +18,8 @@ import static spark.Spark.*;
 public class App
 {
     public static void main( String[] args ) {
-        Database db = Database.getInstance();
+        AccountApi accountApi = AccountApi.getInstance();
+        final String apiUrl = "localhost:4567";
         JsonParser parser = new JsonParser();
 
         before((req, res) -> {
@@ -27,26 +27,49 @@ public class App
             res.header("Access-Control-Allow-Methods", "*");
         });
 
-        get("/users", (req, res) -> {
-            return db.getUsers();
+        get("/accounts", (req, res) -> {
+            return accountApi.getAccounts();
         });
 
-        post("/users", (req, res) -> {
+        get("/sign_in", (req, res) -> {
+            JsonObject json = parser.parse(req.body()).getAsJsonObject();
+            String username = json.get("username").getAsString();
+            String password = json.get("password").getAsString();
+            Account account = accountApi.getAccount(username, password);
+            json = new JsonObject();
+            if(account != null){
+                json.addProperty("account", account.toString());
+            }
+            else{
+                json.addProperty("error", "The account " + username + " doesn't exist");
+            }
+            return json.toString();
+        });
+
+        post("/accounts", (req, res) -> {
             JsonObject json = parser.parse(req.body()).getAsJsonObject();
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
             String email = json.get("email").getAsString();
-            EmailClient.Send("fitnessforgeeks", "048c45cc75aefe2b4278215a89561abd", email, "title", "message");
-            return db.createUser(username, password, email);
+            String token = Base64.encodeBase64String(String.valueOf(new Date().getTime()).getBytes());
+            EmailClient.Send(
+                    "fitnessforgeeks",
+                    "048c45cc75aefe2b4278215a89561abd",
+                    email,
+                    "FitnessForGeeks Verification",
+                    "To verify your account please click on this link <a href='http://" + apiUrl + "/email_verification?token=" + token + "&username=" + username + "'> verification link </a>");
+            return accountApi.createAccount(username, password, email);
         });
 
         get("/email_verification", (req, res) -> {
-            Map<String, String> params = req.params();
-            String token = params.get("token");
-            long decodedToken = new Long(Base64.decodeBase64(token).toString());
+            String token = req.queryParams("token");
+            String username = req.queryParams("username");
+            long decodedToken = new Long(new String(Base64.decodeBase64(token)));
             long timeDiff = new Date().getTime() - decodedToken;
             if(timeDiff < 10 * 60 * 1000){
-                System.out.println("Email verified");
+                accountApi.verifyAccount(username);
+            } else{
+                System.out.println("rip");
             }
             return "";
         });

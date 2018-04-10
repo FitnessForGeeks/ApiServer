@@ -81,7 +81,7 @@ public class EmailClient {
         }
 
         msg.setSubject(title);
-        msg.setText(message, "utf-8");
+        msg.setText(message, "utf-8", "html");
         try {
             msg.setSentDate(new Date());
         } catch (MessagingException e) {
