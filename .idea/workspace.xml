@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="c00a6e2e-6cf8-48f1-948e-0cced91e5823" name="Default" comment="" />
+=======
+<<<<<<< HEAD
+    <list default="true" id="c00a6e2e-6cf8-48f1-948e-0cced91e5823" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+=======
+    <list default="true" id="c00a6e2e-6cf8-48f1-948e-0cced91e5823" name="Default" comment="Added Database singleton and a User class as well as a way to create users">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/database/Database.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/database/User.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/FitnessForGeeks.iml" afterPath="$PROJECT_DIR$/FitnessForGeeks.iml" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fitness/api/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/fitness/api/App.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fitness/api/Utility.java" afterPath="$PROJECT_DIR$/src/main/java/com/fitness/api/Utility.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fitness/api/App.class" afterPath="$PROJECT_DIR$/target/classes/com/fitness/api/App.class" />
+>>>>>>> e93aaab941d94da57284a626b8cd430de62f9d8a
+    </list>
+>>>>>>> eccb3dd88ae4ddb2d7878164b2199474781b35dc
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +45,18 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fitness/api/App.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="310">
               <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="289">
+              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <folding />
+=======
+            <state relative-caret-position="295">
+              <caret line="24" column="32" lean-forward="false" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
+>>>>>>> eccb3dd88ae4ddb2d7878164b2199474781b35dc
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,6 +109,7 @@
                 <element signature="e#211#212#0" expanded="true" />
                 <element signature="e#247#248#0" expanded="true" />
               </folding>
+>>>>>>> e93aaab941d94da57284a626b8cd430de62f9d8a
             </state>
           </provider>
         </entry>
@@ -357,6 +387,7 @@
       <option name="presentableId" value="Default" />
       <updated>1520500271145</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00001" summary="Added Database singleton and a User class as well as a way to create users">
       <created>1523343648241</created>
       <option name="number" value="00001" />
@@ -379,6 +410,16 @@
       <updated>1523344673729</updated>
     </task>
     <option name="localTasksCounter" value="4" />
+=======
+    <task id="LOCAL-00001" summary="working apiserver">
+      <created>1520925311115</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1520925311115</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+>>>>>>> eccb3dd88ae4ddb2d7878164b2199474781b35dc
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -712,6 +753,7 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/sparkjava/spark-core/2.7.2/spark-core-2.7.2.jar!/spark/Route.class">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="150">
           <caret line="9" column="11" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
           <folding />
@@ -722,6 +764,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
           <caret line="103" column="8" lean-forward="true" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+=======
+        <state relative-caret-position="295">
+          <caret line="24" column="32" lean-forward="false" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
+>>>>>>> eccb3dd88ae4ddb2d7878164b2199474781b35dc
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -735,6 +786,7 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+>>>>>>> e93aaab941d94da57284a626b8cd430de62f9d8a
         </state>
       </provider>
     </entry>

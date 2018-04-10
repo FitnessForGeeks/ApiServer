@@ -4,6 +4,11 @@ import Email.EmailClient;
 import com.google.gson.JsonObject;
 import database.Database;
 import com.google.gson.JsonParser;
+import org.apache.commons.codec.binary.Base64;
+
+
+import java.util.Date;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -35,5 +40,15 @@ public class App
             return db.createUser(username, password, email);
         });
 
+        get("/email_verification", (req, res) -> {
+            Map<String, String> params = req.params();
+            String token = params.get("token");
+            long decodedToken = new Long(Base64.decodeBase64(token).toString());
+            long timeDiff = new Date().getTime() - decodedToken;
+            if(timeDiff < 10 * 60 * 1000){
+                System.out.println("Email verified");
+            }
+            return "";
+        });
     }
 }
