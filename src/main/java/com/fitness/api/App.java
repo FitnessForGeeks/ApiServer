@@ -1,5 +1,6 @@
 package com.fitness.api;
 
+import Email.EmailClient;
 import com.google.gson.JsonObject;
 import database.Database;
 import com.google.gson.JsonParser;
@@ -30,7 +31,9 @@ public class App
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
             String email = json.get("email").getAsString();
+            EmailClient.Send("fitnessforgeeks", "048c45cc75aefe2b4278215a89561abd", email, "title", "message");
             return db.createUser(username, password, email);
         });
+
     }
 }
