@@ -4,6 +4,7 @@ import Email.EmailClient;
 import com.google.gson.JsonObject;
 import database.AccountApi;
 import com.google.gson.JsonParser;
+import database.SessionApi;
 import org.apache.commons.codec.binary.Base64;
 import database.Account;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class App
 {
     public static void main( String[] args ) {
         AccountApi accountApi = AccountApi.getInstance();
+        SessionApi sessionApi = SessionApi.getInstance();
         final String apiUrl = "localhost:4567";
         JsonParser parser = new JsonParser();
 
@@ -31,11 +33,15 @@ public class App
             return accountApi.getAccounts();
         });
 
-        get("/sign_in", (req, res) -> {
+        post("/sign_in", (req, res) -> {
             JsonObject json = parser.parse(req.body()).getAsJsonObject();
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
+            Boolean stayLoggedIn = json.get("stayLoggedIn").getAsBoolean();
             Account account = accountApi.getAccount(username, password);
+            if(stayLoggedIn){
+                sessionApi.createSession(account);
+            }
             json = new JsonObject();
             if(account != null){
                 json.addProperty("account", account.toString());
@@ -44,6 +50,12 @@ public class App
                 json.addProperty("error", "The account " + username + " doesn't exist");
             }
             return json.toString();
+        });
+
+        post("/sign_in_with_session", (req, res) -> {
+            JsonObject json = parser.parse(req.body()).getAsJsonObject();
+            String sessionKey = json.get("sessionKey").getAsString();
+            return null;
         });
 
         post("/accounts", (req, res) -> {

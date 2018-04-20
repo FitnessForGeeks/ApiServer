@@ -1,23 +1,14 @@
 package database;
 
-import com.google.gson.JsonObject;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountApi {
-    private static String url = "jdbc:mysql://localhost:3306/fitnessforgeeks?autoReconnect=true&useSSL=false&serverTimezone=UTC";
-    private Connection connection;
+public class AccountApi extends Api{
     private static AccountApi instance;
 
     private AccountApi() {
-        try{
-            this.connection = DriverManager.getConnection(url, "root", "root");
-        }
-        catch(Exception ex){
-            System.out.println("AccountApi init failed");
-        }
+        super();
     }
 
     public static AccountApi getInstance() {
@@ -44,21 +35,23 @@ public class AccountApi {
             accounts.add(new Account(
                     result.getInt("id"),
                     result.getString("username"),
-                    result.getBoolean("isVerified")
+                    result.getBoolean("isVerified"),
+                    null
             ));
         }
         return accounts;
     }
 
     public Account getAccount(String username, String password) throws SQLException{
-        PreparedStatement stat = this.connection.prepareStatement("select * from accounts where username=?");
+        PreparedStatement stat = this.connection.prepareStatement("select * from accounts join sessions on accounts.sessionId = sessions. where username=?");
         stat.setString(1, username);
         ResultSet rs = stat.executeQuery();
         if(rs.next()){
             return new Account(
                     rs.getInt("id"),
                     rs.getString("username"),
-                    rs.getBoolean("isVerified")
+                    rs.getBoolean("isVerified"),
+                    rs.getString("sessionKey")
             );
         }
         return null;
@@ -69,6 +62,5 @@ public class AccountApi {
         stat.setString(1, username);
         stat.setString(2, password);
         stat.setString(3, email);
-        return stat.executeUpdate();
     }
 }
