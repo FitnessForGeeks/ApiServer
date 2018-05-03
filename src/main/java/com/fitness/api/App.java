@@ -4,7 +4,6 @@ import Email.EmailClient;
 import com.google.gson.JsonObject;
 import database.AccountApi;
 import com.google.gson.JsonParser;
-import database.SessionApi;
 import org.apache.commons.codec.binary.Base64;
 import database.Account;
 import java.util.Date;
@@ -20,7 +19,6 @@ public class App
 {
     public static void main( String[] args ) {
         AccountApi accountApi = AccountApi.getInstance();
-        SessionApi sessionApi = SessionApi.getInstance();
         final String apiUrl = "localhost:4567";
         JsonParser parser = new JsonParser();
 
@@ -39,9 +37,6 @@ public class App
             String password = json.get("password").getAsString();
             Boolean stayLoggedIn = json.get("stayLoggedIn").getAsBoolean();
             Account account = accountApi.getAccount(username, password);
-            if(stayLoggedIn){
-                sessionApi.createSession(account);
-            }
             json = new JsonObject();
             if(account != null){
                 json.addProperty("account", account.toString());
@@ -70,7 +65,7 @@ public class App
                     email,
                     "FitnessForGeeks Verification",
                     "To verify your account please click on this link <a href='http://" + apiUrl + "/email_verification?token=" + token + "&username=" + username + "'> verification link </a>");
-            return accountApi.createAccount(username, password, email);
+            return accountApi.createAccount(username, password, email).toString();
         });
 
         get("/email_verification", (req, res) -> {

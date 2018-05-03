@@ -18,8 +18,9 @@ public class AccountApi extends Api{
     }
 
     public void verifyAccount(String username){
-        try {
-            PreparedStatement stat = this.connection.prepareStatement("update accounts set isVerified=true where username=?");
+        try
+                (PreparedStatement stat = this.connection.prepareStatement("update accounts set isVerified=true where username=?");)
+        {
             stat.setString(1, username);
             stat.execute();
         } catch (SQLException e) {
@@ -35,8 +36,7 @@ public class AccountApi extends Api{
             accounts.add(new Account(
                     result.getInt("id"),
                     result.getString("username"),
-                    result.getBoolean("isVerified"),
-                    null
+                    result.getBoolean("isVerified")
             ));
         }
         return accounts;
@@ -50,17 +50,23 @@ public class AccountApi extends Api{
             return new Account(
                     rs.getInt("id"),
                     rs.getString("username"),
-                    rs.getBoolean("isVerified"),
-                    rs.getString("sessionKey")
+                    rs.getBoolean("isVerified")
             );
         }
         return null;
     }
 
-    public int createAccount(String username, String password, String email) throws SQLException {
-        PreparedStatement stat = this.connection.prepareStatement("insert into accounts(username, password, email) values(?, ?, ?);");
+    public Account createAccount(String username, String password, String email) throws SQLException {
+        PreparedStatement stat = this.connection.prepareStatement("insert into accounts(username, password, email, authKey) values(?, ?, ?,'');");
         stat.setString(1, username);
         stat.setString(2, password);
         stat.setString(3, email);
+        stat.execute();
+        stat = this.connection.prepareStatement("select id from accounts where accounts.username = ?;");
+        stat.setString(1, username);
+        ResultSet rs = stat.executeQuery();
+        rs.next();
+        /*return rs.getInt("id");*/
+        return new Account(rs.getInt("id"), username, false);
     }
 }
