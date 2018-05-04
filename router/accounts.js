@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const executeQuery = require("@database/executeQuery").default;
+const executeQuery = require("@database/executeQuery");
 
-router.post("/", (req, res) => {
+router.get("/", (req, res) => {
     executeQuery("select * from accounts")
     .then((result, fields) => {
+        res.status(200);
         res.json({
-            code: 200,
             accounts: result.map(row => ({
                 id: row.id,
                 username: row.username,
@@ -16,9 +16,7 @@ router.post("/", (req, res) => {
     })
     .catch(err => {
         console.log(err);
-        res.json({
-            code: 500
-        })
+        res.status(500).end();
     })
 });
 

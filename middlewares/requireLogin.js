@@ -1,9 +1,8 @@
-module.exports.default = (req, res, next) => {
-    if(req.cookies.authkey)
+module.exports = (req, res, next) => {
+    if(req.cookies.sid)
         next();
     else
         res.json({
-            success: false,
             code: 403
         })
 };

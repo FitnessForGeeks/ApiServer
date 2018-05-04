@@ -1,6 +1,6 @@
-const connectionPool = require("@database/init").default;
+const connectionPool = require("@database/init");
 
-module.exports.default = (query, values) => new Promise((resolve, reject) => {
+module.exports = (query, values) => new Promise((resolve, reject) => {
     connectionPool.getConnection((err, connection) => {
         if(err)
             console.log(err);

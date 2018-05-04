@@ -1,17 +1,10 @@
 const router = require("express").Router();
+const requireLogin = require("@middlewares/requireLogin");
 
-router.post("/", (req, res) => {
+router.post("/", requireLogin, (req, res) => {
     const { sid } = req.cookies;
-    if(sid){
-        res.clearCookie("sid");
-        res.json({
-            code: 200
-        })
-    } else {
-        res.json({
-            code: 400
-        })
-    }
+    res.clearCookie("sid");
+    res.status(200).end();
 });
 
 module.exports = router;

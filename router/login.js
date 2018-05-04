@@ -1,31 +1,25 @@
 const router = require("express").Router();
-const executeQuery = require("@database/executeQuery").default;
+const executeQuery = require("@database/executeQuery");
 
 router.post("/", (req, res) => {
     const { username, password } = req.body;
     if(username && password){
         executeQuery("select * from accounts where username = :username", { username })
         .then((result, fields) => {
-            if(result.length === 0)
-                res.json({
-                    code: 404
-                })
+            const account = result[0];
+            if(result.length === 0 || account.password !== password)
+                res.status(404).end();
             else{
-                res.json({
-                    code: 200
-                })
+                res.cookie("sid", account.authKey);
+                res.status(200).end();
             }
         })
         .catch(err => {
-            console.log(err.code);
-            res.json({
-                code: 500
-            })
+            console.log(err);
+            res.status(500).end();
         })
     } else {
-        res.json({
-            code: 400
-        })
+        res.status(400).end();
     }
 });
 
