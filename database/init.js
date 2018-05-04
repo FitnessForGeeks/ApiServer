@@ -1,6 +1,5 @@
 const mysql = require("mysql");
-
-module.exports = mysql.createPool({
+const connectionPool = mysql.createPool({
     host: process.env.host,
     user: process.env.user,
     password: process.env.password,
@@ -15,3 +14,5 @@ module.exports = mysql.createPool({
         }.bind(this));
     }
 });
+console.log("lul");
+module.exports = connectionPool;
