@@ -7,10 +7,10 @@ const mailClient = nodemailer.createTransport({
         pass: "048c45cc75aefe2b4278215a89561abd"
     }
 });
-
-module.exports = (from, to, subject, text) => {
+// from, to, subject, text, html
+module.exports = mailOptions => {
     return new Promise((resolve, reject) => {
-        mailClient.sendMail({ from, to, subject, text }, (err, info) => {
+        mailClient.sendMail(Object.assign({ from: "fitnessforgeeks@gmail.com" }, mailOptions), (err, info) => {
             if(err)
                 reject(err);
             else
