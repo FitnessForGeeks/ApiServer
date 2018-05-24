@@ -19,7 +19,7 @@ public class App
 {
     public static void main( String[] args ) {
         AccountApi accountApi = AccountApi.getInstance();
-        final String apiUrl = "localhost:4567";
+        final String apiUrl = "localhost:3000";
         JsonParser parser = new JsonParser();
 
         before((req, res) -> {
