@@ -39,20 +39,31 @@ namespace FitnessForGeeksWebApi.Database
             );
         }
 
-        public Account GetByUsername(String username)
+        private Account getByParameter<T>(string columnName, T value)
         {
             Account acc = null;
-            try
-            {
-                MySqlDatabase.ExecuteReader(
-                    $"select * from accounts where username='{username}'",
-                    reader => {
-                        acc = NewAccountFromReader(reader);
-                    },
-                    true
-                );
-            } catch (ResultIsEmptyException ex) {}
+            // sql requires '' around strings
+            var query = typeof(T) == typeof(string) 
+                ? $"'{value}'" 
+                : value.ToString();
+
+            MySqlDatabase.ExecuteReader(
+                $"select * from accounts where {columnName}={query}",
+                reader => {
+                    acc = NewAccountFromReader(reader);
+                }
+            );
             return acc;
+        }
+
+        public Account GetByUsername(string username)
+        {
+            return getByParameter<string>("username", username);
+        }
+
+        public Account getByAuthKey(string authKey)
+        {
+            return getByParameter<string>("authKey", authKey);
         }
 
         public bool Create(CreateAccountPostData data)

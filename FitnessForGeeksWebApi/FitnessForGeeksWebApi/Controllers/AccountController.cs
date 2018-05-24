@@ -35,7 +35,8 @@ namespace FitnessForGeeksWebApi.Controllers
             {
                 Response.Cookies.Append("authKey", acc.AuthKey, new Microsoft.AspNetCore.Http.CookieOptions
                 {
-                    HttpOnly = true
+                    HttpOnly = true,
+                    Expires = DateTime.Now.AddDays(7)
                 });
                 return Ok();
             }
@@ -48,6 +49,19 @@ namespace FitnessForGeeksWebApi.Controllers
         {
             Response.Cookies.Delete("authKey");
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("authenticate")]
+        public IActionResult Authenticate()
+        {
+            var authKey = "";
+            Request.Cookies.TryGetValue("authKey", out authKey);
+            Account acc = manager.getByAuthKey(authKey);
+            if (acc == null)
+                return StatusCode(403);
+
+            return Ok(acc);
         }
 
         [HttpPost]
