@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace FitnessForGeeksWebApi.Database
+namespace FitnessForGeeksWebApi.DatabaseDB
 {
     [Serializable]
     internal class ResultIsEmptyException : Exception

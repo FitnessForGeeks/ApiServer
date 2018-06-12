@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using FitnessForGeeksWebApi.Database;
 using System.Collections.Generic;
 using FitnessForGeeksWebApi.Controllers.RequestDataClasses;
+using FitnessForGeeksWebApi.Database.AccountDB;
 
 namespace FitnessForGeeksWebApi.Controllers
 {
@@ -17,9 +18,9 @@ namespace FitnessForGeeksWebApi.Controllers
         }
 
         [HttpGet]
-        public List<Account> Get([FromQuery]int id)
+        public List<Account> Get()
         {
-            return manager.Get();
+            return manager.GetAll();
         }
         
         [HttpPost]
@@ -55,8 +56,7 @@ namespace FitnessForGeeksWebApi.Controllers
         [Route("authenticate")]
         public IActionResult Authenticate()
         {
-            var authKey = "";
-            Request.Cookies.TryGetValue("authKey", out authKey);
+            Request.Cookies.TryGetValue("authKey", out string authKey);
             Account acc = manager.getByAuthKey(authKey);
             if (acc == null)
                 return StatusCode(403);

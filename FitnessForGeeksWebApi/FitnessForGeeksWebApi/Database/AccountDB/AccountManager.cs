@@ -8,11 +8,11 @@ using System.Diagnostics;
 using FitnessForGeeksWebApi.Controllers;
 using FitnessForGeeksWebApi.Utility;
 
-namespace FitnessForGeeksWebApi.Database
+namespace FitnessForGeeksWebApi.Database.AccountDB
 {
     public class AccountManager : IDatabaseManager<Account>
     {
-        public List<Account> Get()
+        public List<Account> GetAll()
         {
             var accounts = new List<Account>();
             MySqlDatabase.ExecuteReader("select * from accounts", reader => {
@@ -29,13 +29,14 @@ namespace FitnessForGeeksWebApi.Database
                 MySqlDatabase.GetValue<string>(reader, "password"),
                 MySqlDatabase.GetValueOrNull<DateTime>(reader, "birthdate"),
                 MySqlDatabase.GetValueOrNull<double>(reader, "weight"),
-                MySqlDatabase.GetValueOrNull<double>(reader, "height"),
+                MySqlDatabase.GetValueOrNull<int>(reader, "height"),
                 MySqlDatabase.GetValueOrNull<bool>(reader, "isVerified"),
                 MySqlDatabase.GetValue<string>(reader, "authKey"),
                 MySqlDatabase.GetValue<string>(reader, "firstName"),
                 MySqlDatabase.GetValue<string>(reader, "lastName"),
                 MySqlDatabase.GetValue<string>(reader, "email"),
-                MySqlDatabase.GetValue<string>(reader, "description")
+                MySqlDatabase.GetValue<string>(reader, "description"),
+                MySqlDatabase.GetValueOrNull<bool>(reader, "isMale")
             );
         }
 

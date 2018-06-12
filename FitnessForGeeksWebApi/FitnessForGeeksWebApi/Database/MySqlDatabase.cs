@@ -1,4 +1,5 @@
 ﻿using System;
+using FitnessForGeeksWebApi.DatabaseDB;
 using MySql.Data.MySqlClient;
 
 namespace FitnessForGeeksWebApi.Database
@@ -8,7 +9,7 @@ namespace FitnessForGeeksWebApi.Database
         private static string url, database, username, password;
         private static int port;
 
-        public static void init(string url, int port, string database, string username, string password)
+        public static void Init(string url, int port, string database, string username, string password)
         {
             MySqlDatabase.url = url;
             MySqlDatabase.port = port;
@@ -52,6 +53,11 @@ namespace FitnessForGeeksWebApi.Database
                 : (T) value;
         }
 
+        /// <summary>
+        /// Creates a new connection and command to the initialized database and then calls executeNoneQuery(MySqlCommand) with the given query.
+        /// </summary>
+        /// <param name="query">The string to be queried with</param>
+        /// <param name="cb">A function that gets called for each row and receives the reader</param>
         public static void ExecuteNoneQuery(string query, Action<int> cb)
         {
             using (var conn = CreateConnection())
@@ -64,6 +70,12 @@ namespace FitnessForGeeksWebApi.Database
             }
         }
 
+        /// <summary>
+        /// Creates a new connection and command to the initialized database and then calls executeReader(MySqlCommand) with the given query.
+        /// </summary>
+        /// <param name="query">The string to be queried with</param>
+        /// <param name="cb">A function that gets called for each row and receives the reader</param>
+        /// <param name="resultIsRequired">A boolean that specifies whether a exception shall be thrown when the result is empty</param>
         public static void ExecuteReader(string query, Action<MySqlDataReader> cb, bool resultIsRequired = false)
         {
             using (var conn = CreateConnection())

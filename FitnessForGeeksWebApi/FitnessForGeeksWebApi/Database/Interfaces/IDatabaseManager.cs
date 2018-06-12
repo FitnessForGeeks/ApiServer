@@ -7,6 +7,5 @@ namespace FitnessForGeeksWebApi.Database
 {
     public interface IDatabaseManager<DatabaseObject>
     {
-        List<DatabaseObject> Get();
     }
 }
