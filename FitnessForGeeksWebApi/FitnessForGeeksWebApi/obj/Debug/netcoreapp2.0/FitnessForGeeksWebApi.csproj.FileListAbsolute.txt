@@ -9,3 +9,14 @@ C:\Users\tim\Desktop\School\SYP\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksW
 C:\Users\tim\Desktop\School\SYP\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.pdb
 C:\Users\tim\Desktop\School\SYP\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.dll
 C:\Users\tim\Desktop\School\SYP\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.pdb
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.deps.json
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.runtimeconfig.json
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.runtimeconfig.dev.json
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.dll
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\bin\Debug\netcoreapp2.0\FitnessForGeeksWebApi.pdb
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.csprojAssemblyReference.cache
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.csproj.CoreCompileInputs.cache
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.AssemblyInfoInputs.cache
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.AssemblyInfo.cs
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.dll
+C:\Users\timun\Desktop\School\syp\ApiServer\FitnessForGeeksWebApi\FitnessForGeeksWebApi\obj\Debug\netcoreapp2.0\FitnessForGeeksWebApi.pdb

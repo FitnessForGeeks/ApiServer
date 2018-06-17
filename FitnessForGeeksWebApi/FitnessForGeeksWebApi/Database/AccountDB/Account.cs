@@ -71,14 +71,26 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             }
         }
 
-        public int? RemainingCalories
+        public int? TDEE
         {
             get
             {
                 if(Height.HasValue && Weight.HasValue && IsMale.HasValue)
                 {
-                    var eatenRecipes = RecipesEatenToday;
-                    var calories = Height.Value * 6.25 + Weight.Value * 9.99 - Age * 4.92 + (IsMale.Value ? 5 : -161);
+                    return (int) (Height.Value * 6.25 + Weight.Value * 9.99 - Age * 4.92 + (IsMale.Value ? 5 : -161));
+                }
+                return null;
+            }
+        }
+
+        public int? RemainingCalories
+        {
+            get
+            {
+                var eatenRecipes = RecipesEatenToday;
+                var calories = TDEE;
+                if(calories.HasValue)
+                {
                     if(eatenRecipes.Count != 0)
                     {
                         foreach(var recipe in eatenRecipes)
