@@ -42,7 +42,13 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
         public string Email { get; }
         public string Description { get; }
         public bool? IsMale { get; }
-
+        public string ProfilePicture
+        {
+            get
+            {
+                return $"http://localhost:5000/api/static/{Username}/profilePicture";
+            }
+        }
         /// <summary>
         /// Returns all recipes that were eaten today
         /// </summary>

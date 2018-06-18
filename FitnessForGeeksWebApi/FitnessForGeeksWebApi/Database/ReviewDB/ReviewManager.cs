@@ -26,6 +26,7 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
                MySqlDatabase.GetValueOrNull<int>(reader, "recipeId").Value,
                MySqlDatabase.GetValue<string>(reader, "text"),
                MySqlDatabase.GetValueOrNull<double>(reader, "rating").Value,
+               MySqlDatabase.GetValue<string>(reader, "username"),
                MySqlDatabase.GetValueOrNull<DateTime>(reader, "createdAt").Value
             );
         }
@@ -34,7 +35,7 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
         {
             var reviews = new List<Review>();
 
-            MySqlDatabase.ExecuteReader($"select * from reviews where recipeId = {id}", reader =>
+            MySqlDatabase.ExecuteReader($"select reviews.*, accounts.username from reviews join accounts on accounts.id = reviews.accountId where recipeId = {id}", reader =>
             {
                 reviews.Add(NewReviewFromReader(reader));
             });
