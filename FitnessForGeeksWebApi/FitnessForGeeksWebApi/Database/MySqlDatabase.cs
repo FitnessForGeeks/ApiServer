@@ -57,8 +57,8 @@ namespace FitnessForGeeksWebApi.Database
         /// Creates a new connection and command to the initialized database and then calls executeNoneQuery(MySqlCommand) with the given query.
         /// </summary>
         /// <param name="query">The string to be queried with</param>
-        /// <param name="cb">A function that gets called for each row and receives the reader</param>
-        public static void ExecuteNoneQuery(string query, Action<int> cb)
+        /// <param name="cb">A function that gets called after the non query was executed and receives the row count</param>
+        public static void ExecuteNoneQuery(string query, Action<int> cb = null)
         {
             using (var conn = CreateConnection())
             using (var command = new MySqlCommand())
@@ -66,7 +66,7 @@ namespace FitnessForGeeksWebApi.Database
                 command.Connection = conn;
                 command.CommandText = query;
                 var rowCount = command.ExecuteNonQuery();
-                cb.Invoke(rowCount);
+                cb?.Invoke(rowCount);
             }
         }
 

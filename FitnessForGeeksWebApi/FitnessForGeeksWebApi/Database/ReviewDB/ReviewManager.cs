@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using FitnessForGeeksWebApi.Controllers.RequestDataClasses;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,19 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
             return amount;
         }
 
-        private Review NewReviewFromReader(MySqlDataReader reader)
+		public List<Review> GetAllByRecipeId(int id, int offset, int length)
+		{
+			var reviews = new List<Review>();
+
+            MySqlDatabase.ExecuteReader($"select reviews.*, accounts.username from reviews join accounts on accounts.id = reviews.accountId where recipeId = {id} limit {offset}, {length}", reader =>
+            {
+                reviews.Add(NewReviewFromReader(reader));
+            });
+
+            return reviews;
+		}
+
+		private Review NewReviewFromReader(MySqlDataReader reader)
         {
             return new Review(
                MySqlDatabase.GetValueOrNull<int>(reader, "id").Value,
@@ -31,7 +44,18 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
             );
         }
 
-        public List<Review> GetAllByRecipeId(int id)
+		public int? Create(PostReviewPostData data)
+		{
+			int? id = null;
+			MySqlDatabase.ExecuteReader($"select insertReview({data.AccountId},{data.RecipeId},'{data.Text}',{data.Rating}) id;", reader =>
+			{
+				if (reader.HasRows)
+					id = reader.GetInt32("id");
+			});
+			return id;
+		}
+
+		public List<Review> GetAllByRecipeId(int id)
         {
             var reviews = new List<Review>();
 

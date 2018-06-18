@@ -13423,23 +13423,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tim\\.nuget\\packages\\": {},
+    "C:\\Users\\timun\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tim\\Desktop\\School\\SYP\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi.csproj",
+      "projectUniqueName": "C:\\Users\\timun\\Desktop\\School\\syp\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi.csproj",
       "projectName": "FitnessForGeeksWebApi",
-      "projectPath": "C:\\Users\\tim\\Desktop\\School\\SYP\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi.csproj",
-      "packagesPath": "C:\\Users\\tim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tim\\Desktop\\School\\SYP\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\obj\\",
+      "projectPath": "C:\\Users\\timun\\Desktop\\School\\syp\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi.csproj",
+      "packagesPath": "C:\\Users\\timun\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\timun\\Desktop\\School\\syp\\ApiServer\\FitnessForGeeksWebApi\\FitnessForGeeksWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\timun\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
