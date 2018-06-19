@@ -27,5 +27,13 @@ namespace FitnessForGeeksWebApi.Controllers
             }
             return File(bytes, "image/jpeg");
         }
+
+		[HttpGet]
+		[Route("eat-it-button")]
+		public IActionResult GetEatItButtonIcon()
+		{
+			return File(System.IO.File.ReadAllBytes("./static/eat-it-button.svg"), "image/svg+xml");
+		}
     }
+
 }

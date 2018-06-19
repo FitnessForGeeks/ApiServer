@@ -40,7 +40,7 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             );
         }
 
-        private Account getByParameter<T>(string columnName, T value)
+		private Account GetByParameter<T>(string columnName, T value)
         {
             Account acc = null;
             // sql requires '' around strings
@@ -57,14 +57,19 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             return acc;
         }
 
-        public Account GetByUsername(string username)
+		public Account GetById(int accountId)
+		{
+			return GetByParameter<int>("id", accountId);
+		}
+
+		public Account GetByUsername(string username)
         {
-            return getByParameter<string>("username", username);
+            return GetByParameter<string>("username", username);
         }
 
-        public Account getByAuthKey(string authKey)
+        public Account GetByAuthKey(string authKey)
         {
-            return getByParameter<string>("authKey", authKey);
+            return GetByParameter<string>("authKey", authKey);
         }
 
         public bool Create(CreateAccountPostData data)

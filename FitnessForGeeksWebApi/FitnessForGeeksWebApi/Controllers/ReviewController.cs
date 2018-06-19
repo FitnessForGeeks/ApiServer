@@ -16,9 +16,17 @@ namespace FitnessForGeeksWebApi.Controllers
         ReviewManager reviewManager = new ReviewManager();
 
         [HttpGet]
-        public IActionResult GetAllByRecipeIdWithPage([FromQuery] int id, [FromQuery] int pageNumber)
+        public IActionResult GetAllByRecipeId([FromQuery] int id, [FromQuery] int pageNumber, [FromQuery] string sortText, [FromQuery] bool isAscending)
         {
-            return Ok(reviewManager.GetAllByRecipeId(id, 5 * (pageNumber - 1) , 5));
+			if (pageNumber == 0)
+				return Ok();
+			if(sortText != "")
+			{
+				return Ok(reviewManager.GetAllByRecipeId(id, 5 * (pageNumber - 1), 5, sortText, isAscending));
+			}
+			else
+				return Ok(reviewManager.GetAllByRecipeId(id, 5 * (pageNumber - 1), 5));
+
         }
 
 		[HttpPost]
