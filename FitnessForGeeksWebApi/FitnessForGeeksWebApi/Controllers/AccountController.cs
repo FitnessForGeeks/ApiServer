@@ -32,16 +32,18 @@ namespace FitnessForGeeksWebApi.Controllers
                 return StatusCode(400);
             }
             Account acc = manager.GetByUsername(data.Username);
-            if (acc != null && acc.Password == data.Password)
+            if (acc == null)
+                return NotFound();
+            if (acc.Password == data.Password)
             {
                 Response.Cookies.Append("authKey", acc.AuthKey, new Microsoft.AspNetCore.Http.CookieOptions
                 {
                     HttpOnly = true,
                     Expires = DateTime.Now.AddDays(7)
                 });
-                return Ok();
+                return Ok(acc);
             }
-            return NotFound();
+            return Forbid();
         }
 
         [HttpPost]
