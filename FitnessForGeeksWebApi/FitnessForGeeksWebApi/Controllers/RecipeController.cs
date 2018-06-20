@@ -13,15 +13,21 @@ namespace FitnessForGeeksWebApi.Controllers
     public class RecipeController : Controller
     {
         RecipeManager manager = new RecipeManager();
+
         [HttpGet]
-        public IActionResult getAll()
+        public IActionResult GetAll([FromQuery] int? pageNumber, [FromQuery] string query, [FromQuery] string sortText, [FromQuery] bool? isAscending)
         {
-            return Ok(manager.GetAll());
+			if(pageNumber.HasValue && isAscending.HasValue && query != null && sortText != null)
+			{
+				return Ok(manager.GetAll(pageNumber.Value, isAscending.Value, query, sortText));
+			}
+			else
+				return Ok(manager.GetAll());
         }
 
         [HttpGet]
         [Route("search")]
-        public IActionResult getByQuery([FromQuery]string query)
+        public IActionResult GetByQuery([FromQuery]string query)
         {
             return Ok(manager.GetByQuery(query));
         }

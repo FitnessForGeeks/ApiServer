@@ -40,6 +40,22 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             );
         }
 
+		public void UpdateAccount(Account account)
+		{
+			var birthdateString = account.Birthdate.Value.ToString("dd/MM/yyyy");
+			MySqlDatabase.ExecuteNoneQuery(
+				$"update accounts set " +
+				$" firstName = '{account.FirstName}'," +
+				$" lastName = '{account.LastName}'," +
+				(account.Email == null? "" : $" email = '{account.Email}',") +
+				$" isMale = {account.IsMale}," +
+				$" birthdate = str_to_date('{birthdateString}', '%d/%m/%Y')," +
+				$" weight = {account.Weight}," +
+				$" height = {account.Height}," +
+				$" description = '{account.Description}' " +
+				$"where accounts.id = {account.Id}");
+		}
+
 		private Account GetByParameter<T>(string columnName, T value)
         {
             Account acc = null;

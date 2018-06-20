@@ -61,6 +61,15 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             }
         }
 
+		[JsonIgnore]
+		public List<Recipe> MyRecipes
+		{
+			get
+			{
+				return recipeManager.GetAllByAccountId(Id.Value);
+			}
+		}
+
         public int? Age
         {
             get

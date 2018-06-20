@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using FitnessForGeeksWebApi.Controllers.RequestDataClasses;
 using FitnessForGeeksWebApi.Database.AccountDB;
 using FitnessForGeeksWebApi.Database.EatenRecipeDB;
+using MySql.Data.MySqlClient;
 
 namespace FitnessForGeeksWebApi.Controllers
 {
@@ -25,6 +26,20 @@ namespace FitnessForGeeksWebApi.Controllers
         {
             return manager.GetAll();
         }
+
+		[HttpPut]
+		public IActionResult UpdateAccount([FromBody] Account account)
+		{
+			try
+			{
+				manager.UpdateAccount(account);
+			}
+			catch (MySqlException ex)
+			{
+				return StatusCode(409);
+			}
+			return Ok();
+		}
         
         [HttpPost]
         [Route("login")]
@@ -64,6 +79,13 @@ namespace FitnessForGeeksWebApi.Controllers
 			return Ok(manager.GetById(accountId).RecipesEatenToday);
 		}
 
+		[HttpGet]
+		[Route("myRecipes")]
+		public IActionResult GetMyRecipes([FromQuery] int accountId)
+		{
+			return Ok(manager.GetById(accountId).MyRecipes);
+		}
+		
 		[HttpPost]
         [Route("eatRecipe")]
         public IActionResult EatRecipe([FromQuery] int accountId, [FromQuery] int recipeId)

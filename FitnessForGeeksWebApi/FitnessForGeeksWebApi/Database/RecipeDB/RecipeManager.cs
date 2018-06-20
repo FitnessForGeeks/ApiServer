@@ -45,7 +45,27 @@ namespace FitnessForGeeksWebApi.RecipeDB
             );
         }
 
-        public List<Recipe> GetByQuery(string query)
+		public List<Recipe> GetAll(int pageNumber, bool isAscending, string query, string sortText)
+		{
+			var sortType = isAscending ? "ASC" : "DESC";
+			var length = 13;
+			var offset = length * (pageNumber - 1);
+			var sortColumn = "avgRating";
+			var recipes = new List<Recipe>();
+
+			if (sortText.ToUpper() == "TITLE")
+				sortColumn = "title";
+
+			MySqlDatabase.ExecuteReader($"select recipes.*, accounts.username from recipes join accounts on accounts.id = recipes.accountId" +
+				$"where title like '%{query}%' order by {sortColumn} {sortType} limit {offset}, {length}", reader =>
+			{
+				recipes.Add(NewRecipeFromReader(reader));
+			});
+
+			return recipes;
+		}
+
+		public List<Recipe> GetByQuery(string query)
         {
             if (query == null)
                 return GetAll();
@@ -61,5 +81,17 @@ namespace FitnessForGeeksWebApi.RecipeDB
             });
             return recipe;
         }
-    }
+
+		public List<Recipe> GetAllByAccountId(int accountId)
+		{
+            var recipes = new List<Recipe>();
+
+            MySqlDatabase.ExecuteReader($"select recipes.*, accounts.username from recipes join accounts on accounts.id = recipes.accountId where accounts.id = {accountId}", reader =>
+            {
+                recipes.Add(NewRecipeFromReader(reader));
+            });
+
+            return recipes;
+		}
+	}
 }

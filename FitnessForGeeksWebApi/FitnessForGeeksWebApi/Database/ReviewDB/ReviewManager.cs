@@ -37,7 +37,7 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
 			var sortType = isAscending ? "ASC" : "DESC";
 			var columnName = "createdAt";
 
-			if (sortText == "RATING")
+			if (sortText.ToUpper() == "RATING")
 				columnName = "rating";
 
             MySqlDatabase.ExecuteReader($"select reviews.*, accounts.username from reviews join accounts on accounts.id = reviews.accountId " +

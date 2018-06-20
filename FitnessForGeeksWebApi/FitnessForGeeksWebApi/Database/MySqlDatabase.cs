@@ -65,8 +65,8 @@ namespace FitnessForGeeksWebApi.Database
             {
                 command.Connection = conn;
                 command.CommandText = query;
-                var rowCount = command.ExecuteNonQuery();
-                cb?.Invoke(rowCount);
+				var rowCount = command.ExecuteNonQuery();
+				cb?.Invoke(rowCount);
             }
         }
 

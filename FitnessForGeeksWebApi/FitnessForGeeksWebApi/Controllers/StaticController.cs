@@ -28,6 +28,22 @@ namespace FitnessForGeeksWebApi.Controllers
             return File(bytes, "image/jpeg");
         }
 
+        [HttpPost]
+        [Route("{username}/profilePicture")]
+		public IActionResult PostProfilePicture([FromRoute] string username)
+		{
+			var file = Request.Form.Files[0];
+			if(file != null)
+			{
+				using(var stream = new FileStream($"./static/{username}/profilePicture.jpg", FileMode.Truncate))
+				{
+					file.CopyTo(stream);
+				}
+			}
+			return Ok();
+		}
+
+
 		[HttpGet]
 		[Route("eat-it-button")]
 		public IActionResult GetEatItButtonIcon()
