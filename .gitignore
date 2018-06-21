@@ -1,2 +1,3 @@
-FitnessForGeeksWebApi/FitnessForGeeksWebApi/bin/*
-FitnessForGeeksWebApi/FitnessForGeeksWebApi/obj/*
+FitnessForGeeksWebApi/FitnessForGeeksWebApi/bin/
+FitnessForGeeksWebApi/FitnessForGeeksWebApi/obj/
+FitnessForGeeksWebApi/FitnessForGeeksWebApi/.vs/
