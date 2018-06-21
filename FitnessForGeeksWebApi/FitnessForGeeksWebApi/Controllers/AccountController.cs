@@ -75,10 +75,5 @@ namespace FitnessForGeeksWebApi.Controllers
             }
             return StatusCode(409);
         }
-
-        [HttpDelete]
-        public void Delete([FromBody]int id)
-        {
-        }
     }
 }
