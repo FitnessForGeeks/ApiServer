@@ -31,6 +31,24 @@ namespace FitnessForGeeksWebApi.Database.ReviewDB
             return reviews;
 		}
 
+		public object GetAllByRecipeId(int id, int offset, int length, string sortText, bool isAscending)
+		{
+			var reviews = new List<Review>();
+			var sortType = isAscending ? "ASC" : "DESC";
+			var columnName = "createdAt";
+
+			if (sortText.ToUpper() == "RATING")
+				columnName = "rating";
+
+            MySqlDatabase.ExecuteReader($"select reviews.*, accounts.username from reviews join accounts on accounts.id = reviews.accountId " +
+				$"where recipeId = {id} order by {columnName} {sortType} limit {offset}, {length}", reader =>
+            {
+                reviews.Add(NewReviewFromReader(reader));
+            });
+
+            return reviews;
+		}
+
 		private Review NewReviewFromReader(MySqlDataReader reader)
         {
             return new Review(

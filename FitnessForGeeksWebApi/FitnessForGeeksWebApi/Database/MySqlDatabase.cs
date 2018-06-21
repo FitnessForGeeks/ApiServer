@@ -35,7 +35,7 @@ namespace FitnessForGeeksWebApi.Database
             return conn;
         }
 
-        public static Nullable<T> GetValueOrNull<T>(MySqlDataReader reader, string columnName) where T : struct
+        public static T? GetValueOrNull<T>(MySqlDataReader reader, string columnName) where T : struct
         {
             object columnValue = reader[columnName];
 
@@ -65,8 +65,8 @@ namespace FitnessForGeeksWebApi.Database
             {
                 command.Connection = conn;
                 command.CommandText = query;
-                var rowCount = command.ExecuteNonQuery();
-                cb?.Invoke(rowCount);
+				var rowCount = command.ExecuteNonQuery();
+				cb?.Invoke(rowCount);
             }
         }
 

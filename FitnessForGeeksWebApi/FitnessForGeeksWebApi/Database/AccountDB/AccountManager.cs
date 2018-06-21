@@ -40,7 +40,23 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             );
         }
 
-        private Account getByParameter<T>(string columnName, T value)
+		public void UpdateAccount(Account account)
+		{
+			var birthdateString = account.Birthdate.Value.ToString("dd/MM/yyyy");
+			MySqlDatabase.ExecuteNoneQuery(
+				$"update accounts set " +
+				$" firstName = '{account.FirstName}'," +
+				$" lastName = '{account.LastName}'," +
+				(account.Email == null? "" : $" email = '{account.Email}',") +
+				$" isMale = {account.IsMale}," +
+				$" birthdate = str_to_date('{birthdateString}', '%d/%m/%Y')," +
+				$" weight = {account.Weight}," +
+				$" height = {account.Height}," +
+				$" description = '{account.Description}' " +
+				$"where accounts.id = {account.Id}");
+		}
+
+		private Account GetByParameter<T>(string columnName, T value)
         {
             Account acc = null;
             // sql requires '' around strings
@@ -57,14 +73,19 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
             return acc;
         }
 
-        public Account GetByUsername(string username)
+		public Account GetById(int accountId)
+		{
+			return GetByParameter<int>("id", accountId);
+		}
+
+		public Account GetByUsername(string username)
         {
-            return getByParameter<string>("username", username);
+            return GetByParameter<string>("username", username);
         }
 
-        public Account getByAuthKey(string authKey)
+        public Account GetByAuthKey(string authKey)
         {
-            return getByParameter<string>("authKey", authKey);
+            return GetByParameter<string>("authKey", authKey);
         }
 
         public bool Create(CreateAccountPostData data)

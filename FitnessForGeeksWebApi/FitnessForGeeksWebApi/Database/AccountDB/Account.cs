@@ -10,6 +10,7 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
     {
         private readonly EatenRecipeManager eatenRecipeManager = new EatenRecipeManager();
         private readonly RecipeManager recipeManager = new RecipeManager();
+		private List<EatenRecipe> eatenRecipes = new List<EatenRecipe>();
 
         public Account(int? id, string username, string password, DateTime? birthdate, double? weight, int? height, bool? isVerified, string authKey, string firstName, string lastName, string email, string description, bool? isMale)
         {
@@ -53,19 +54,21 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
         /// Returns all recipes that were eaten today
         /// </summary>
         [JsonIgnore]
-        public List<Recipe> RecipesEatenToday
+        public List<EatenRecipe> RecipesEatenToday
         {
             get {
-                var recipes = new List<Recipe>();
-
-                foreach(var eatenRecipe in eatenRecipeManager.GetCurrentByAccountId(Id.Value))
-                {
-                    recipes.Add(recipeManager.GetRecipeById(eatenRecipe.RecipeId.Value));
-                }
-
-                return recipes;
+                return eatenRecipes = eatenRecipeManager.GetCurrentByAccountId(Id.Value);
             }
         }
+
+		[JsonIgnore]
+		public List<Recipe> MyRecipes
+		{
+			get
+			{
+				return recipeManager.GetAllByAccountId(Id.Value);
+			}
+		}
 
         public int? Age
         {
@@ -93,7 +96,7 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
         {
             get
             {
-                var eatenRecipes = RecipesEatenToday;
+				var eatenRecipes = RecipesEatenToday;
                 var calories = TDEE;
                 if(calories.HasValue)
                 {
