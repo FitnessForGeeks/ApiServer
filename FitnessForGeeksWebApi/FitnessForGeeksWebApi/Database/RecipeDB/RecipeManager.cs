@@ -35,7 +35,6 @@ namespace FitnessForGeeksWebApi.RecipeDB
                 MySqlDatabase.GetValueOrNull<double>(reader, "avgRating").Value,
                 MySqlDatabase.GetValueOrNull<int>(reader, "accountId"),
                 MySqlDatabase.GetValue<String>(reader, "title"),
-                MySqlDatabase.GetValue<String>(reader, "image"),
                 description ?? "No description",
                 MySqlDatabase.GetValueOrNull<int>(reader, "calories"),
                 MySqlDatabase.GetValue<String>(reader, "username"),
@@ -45,7 +44,7 @@ namespace FitnessForGeeksWebApi.RecipeDB
             );
         }
 
-		public List<Recipe> GetAll(int pageNumber, bool isAscending, string query, string sortText)
+        public List<Recipe> GetAll(int accountId, int pageNumber, bool isAscending, string query, string sortText)
 		{
 			var sortType = isAscending ? "ASC" : "DESC";
 			var length = 13;
@@ -56,8 +55,44 @@ namespace FitnessForGeeksWebApi.RecipeDB
 			if (sortText.ToUpper() == "TITLE")
 				sortColumn = "title";
 
-			MySqlDatabase.ExecuteReader($"select recipes.*, accounts.username from recipes join accounts on accounts.id = recipes.accountId" +
-				$"where title like '%{query}%' order by {sortColumn} {sortType} limit {offset}, {length}", reader =>
+
+			MySqlDatabase.ExecuteReader(
+                $"select recipes.*, accounts.username from recipes join accounts on accounts.id = recipes.accountId where accountId = {accountId}" +
+				(query == ""? " " : $" title like '%{query}%' ") + 
+                $"order by {sortColumn} {sortType} limit {offset}, {length}", reader =>
+			{
+				recipes.Add(NewRecipeFromReader(reader));
+			});
+
+			return recipes;
+		}
+
+        public void Create(Recipe recipe)
+        {
+            var parsedDirections = String.Join(";", recipe.Directions);
+            var parsedIngredients = String.Join(";", recipe.Ingredients);
+            var query = $"insert into recipes(title, accountId, createdAt, description, image, calories, directions, ingredients) " +
+                $"values('{recipe.Title}', {recipe.AccountId}, current_timestamp(), '{recipe.Description}', '{recipe.Title}', {recipe.Calories}, '{parsedDirections}', '{parsedIngredients}')";
+
+            MySqlDatabase.ExecuteNoneQuery(query);
+        }
+
+        public List<Recipe> GetAll(int pageNumber, bool isAscending, string query, string sortText)
+		{
+			var sortType = isAscending ? "ASC" : "DESC";
+			var length = 13;
+			var offset = length * (pageNumber - 1);
+			var sortColumn = "avgRating";
+			var recipes = new List<Recipe>();
+
+			if (sortText.ToUpper() == "TITLE")
+				sortColumn = "title";
+
+            var sql = $"select recipes.*, accounts.username from recipes join accounts on accounts.id = recipes.accountId where public = false" +
+                (query == "" ? " " : $" title like '%{query}%' ") +
+                $"order by {sortColumn} {sortType} limit {offset}, {length}";
+
+			MySqlDatabase.ExecuteReader(sql, reader =>
 			{
 				recipes.Add(NewRecipeFromReader(reader));
 			});

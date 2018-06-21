@@ -32,17 +32,63 @@ namespace FitnessForGeeksWebApi.Controllers
         [Route("{username}/profilePicture")]
 		public IActionResult PostProfilePicture([FromRoute] string username)
 		{
-			var file = Request.Form.Files[0];
+            var file = Request.Form.Files[0];
+            var path = $"./static/{username}/profilePicture.jpg";
 			if(file != null)
 			{
-				using(var stream = new FileStream($"./static/{username}/profilePicture.jpg", FileMode.Truncate))
+                if (!System.IO.File.Exists(path))
+                {
+                    System.IO.File.Create(path);
+                }
+				using(var stream = new FileStream(path, FileMode.Truncate))
 				{
 					file.CopyTo(stream);
 				}
 			}
 			return Ok();
 		}
+        
+        [HttpGet]
+        [Route("recipes/{title}")]
+        public IActionResult GetRecipePicture([FromRoute] string title)
+        {
+            var path = $"./static/recipes/{title}.jpg";
+            byte[] bytes;
+            if (System.IO.File.Exists(path))
+            {
+                bytes = System.IO.File.ReadAllBytes(path);
+            }
+            else
+            {
+                bytes = System.IO.File.ReadAllBytes("./static/defaultRecipe.jpg");
+            }
+            return File(bytes, "image/jpeg");
+        }
 
+
+        [HttpPost]
+        [Route("recipes/{title}")]
+        public IActionResult PostRecipePicture([FromRoute] string title)
+        {
+            if(Request.Form.Files.Count == 1)
+            {
+                var file = Request.Form.Files[0];
+                var path = $"./static/recipes/{title}.jpg";
+                if(file != null)
+                {
+                    if (!System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Create(path).Close();
+                    }
+                    using(var stream = new FileStream(path, FileMode.Truncate))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                return Ok();
+            }
+            return BadRequest();
+        }
 
 		[HttpGet]
 		[Route("eat-it-button")]

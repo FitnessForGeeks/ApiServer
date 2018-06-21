@@ -42,18 +42,25 @@ namespace FitnessForGeeksWebApi.Database.AccountDB
 
 		public void UpdateAccount(Account account)
 		{
-			var birthdateString = account.Birthdate.Value.ToString("dd/MM/yyyy");
-			MySqlDatabase.ExecuteNoneQuery(
-				$"update accounts set " +
-				$" firstName = '{account.FirstName}'," +
-				$" lastName = '{account.LastName}'," +
-				(account.Email == null? "" : $" email = '{account.Email}',") +
-				$" isMale = {account.IsMale}," +
-				$" birthdate = str_to_date('{birthdateString}', '%d/%m/%Y')," +
-				$" weight = {account.Weight}," +
-				$" height = {account.Height}," +
-				$" description = '{account.Description}' " +
-				$"where accounts.id = {account.Id}");
+            var query = "update accounts set ";
+            if (account.FirstName != null)
+                query += $"firstName = '{account.FirstName}',";
+            if (account.LastName != null)
+                query += $"lastName = '{account.LastName}',";
+            if (account.Email != null)
+                query += $"email = '{account.Email}',";
+            if (account.IsMale.HasValue)
+                query += $"isMale = {account.IsMale},";
+            if (account.Birthdate.HasValue)
+                query += $"birthdate = str_to_date('{account.Birthdate.Value.ToString("dd-MM-yyyy")}','%d-%m-%Y'),";
+            if (account.Weight.HasValue)
+                query += $"weight = {account.Weight},";
+            if (account.Height.HasValue)
+                query += $"height = {account.Height},";
+            if (account.Description != null)
+                query += $"description = '{account.Description}',";
+            query = query.Remove(query.Length - 1);
+			MySqlDatabase.ExecuteNoneQuery(query + $" where accounts.id = {account.Id}");
 		}
 
 		private Account GetByParameter<T>(string columnName, T value)

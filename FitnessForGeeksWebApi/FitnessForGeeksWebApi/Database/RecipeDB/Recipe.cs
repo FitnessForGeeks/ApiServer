@@ -10,11 +10,10 @@ namespace FitnessForGeeksWebApi.RecipeDB
     {
         private readonly ReviewManager reviewManager = new ReviewManager();
 
-        public Recipe(int? id, int reviewCount, double avgRating, int? accountId, string title, string image, string description, int? calories, string owner, List<string> directions, List<string> ingredients, DateTime? createdAt)
+        public Recipe(int? id, int reviewCount, double avgRating, int? accountId, string title, string description, int? calories, string owner, List<string> directions, List<string> ingredients, DateTime? createdAt)
         {
             Id = id;
             Title = title;
-            Image = image;
             Calories = calories;
             Directions = directions;
             AccountId = accountId;
@@ -29,7 +28,12 @@ namespace FitnessForGeeksWebApi.RecipeDB
         public int? Id { get; }
         public int? AccountId { get; }
         public string Title { get; }
-        public string Image { get; }
+        public string Image {
+            get
+            {
+                return "http://localhost:5000/api/static/recipes/" + Title;
+            }
+        }
         public string Owner { get; }
         public DateTime? CreatedAt { get; }
         public string Description { get; }
